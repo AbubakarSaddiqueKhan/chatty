@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "399624615138",
+    "project_id": "hamza-chat-app",
+    "storage_bucket": "hamza-chat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399624615138:android:4a23ae3c7e4f54a7e6dabb",
+        "android_client_info": {
+          "package_name": "com.e"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQbITEj6tceAMxBqhAnABaW7Et1m9ZZX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399624615138:android:0e2faf729029595ee6dabb",
+        "android_client_info": {
+          "package_name": "com.example.chatty"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQbITEj6tceAMxBqhAnABaW7Et1m9ZZX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
