@@ -22,7 +22,8 @@ class UpdateUserProfileImageBloc
 
     try {
       emit(UpdateUserProfileImageLoadedState(
-          userSelectedImage: event.selectedUserImage));
+          userSelectedImage: event.selectedUserImage,
+          userSelectedImageName: event.imageName));
       developer.log("Loadedddddddddddddd");
     } catch (e) {
       emit(UpdateUserProfileImageErrorState());

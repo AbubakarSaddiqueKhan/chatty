@@ -1,22 +1,22 @@
-part of 'pick_user_image_from_device_bloc.dart';
+// part of 'pick_user_image_from_device_bloc.dart';
 
-@immutable
-sealed class PickUserImageFromDeviceState {
-  const PickUserImageFromDeviceState();
-}
+// @immutable
+// sealed class PickUserImageFromDeviceState {
+//   const PickUserImageFromDeviceState();
+// }
 
-final class PickUserImageFromDeviceInitialState
-    extends PickUserImageFromDeviceState {}
+// final class PickUserImageFromDeviceInitialState
+//     extends PickUserImageFromDeviceState {}
 
-final class PickUserImageFromDeviceLoadingState
-    extends PickUserImageFromDeviceState {}
+// final class PickUserImageFromDeviceLoadingState
+//     extends PickUserImageFromDeviceState {}
 
-final class PickUserImageFromDeviceLoadedState
-    extends PickUserImageFromDeviceState {
-  final File? pickedImage;
+// final class PickUserImageFromDeviceLoadedState
+//     extends PickUserImageFromDeviceState {
+//   final File? pickedImage;
 
-  const PickUserImageFromDeviceLoadedState({required this.pickedImage});
-}
+//   const PickUserImageFromDeviceLoadedState({required this.pickedImage});
+// }
 
-final class PickUserImageFromDeviceErrorState
-    extends PickUserImageFromDeviceState {}
+// final class PickUserImageFromDeviceErrorState
+//     extends PickUserImageFromDeviceState {}

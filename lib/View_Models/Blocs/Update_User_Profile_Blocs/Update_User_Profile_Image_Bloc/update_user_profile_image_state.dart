@@ -14,8 +14,12 @@ final class UpdateUserProfileImageLoadingState
 final class UpdateUserProfileImageLoadedState
     extends UpdateUserProfileImageState {
   final File userSelectedImage;
+  final String userSelectedImageName;
 
-  const UpdateUserProfileImageLoadedState({required this.userSelectedImage});
+  const UpdateUserProfileImageLoadedState({
+    required this.userSelectedImage,
+    required this.userSelectedImageName,
+  });
 }
 
 final class UpdateUserProfileImageErrorState

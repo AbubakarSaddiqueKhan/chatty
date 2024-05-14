@@ -6,7 +6,8 @@ class ImagePickFromDevice {
   static const String cameraSelected = "camera_selected";
   static const String gallerySelected = "gallery_selected";
 
-  static Future<File?> pickImageFromDevice(String inputSource) async {
+  static Future<(File? file, String imageName)?> pickImageFromDevice(
+      String inputSource) async {
     final imagePicker = ImagePicker();
     final XFile? pickedImage = await imagePicker.pickImage(
         source: inputSource == cameraSelected
@@ -19,6 +20,7 @@ class ImagePickFromDevice {
     String pickedImageName = pickedImage.name;
     File completeSelectedImageFile = File(pickedImage.path);
     developer.log('Picked Image name : $pickedImageName');
-    return completeSelectedImageFile;
+
+    return (completeSelectedImageFile, pickedImageName);
   }
 }

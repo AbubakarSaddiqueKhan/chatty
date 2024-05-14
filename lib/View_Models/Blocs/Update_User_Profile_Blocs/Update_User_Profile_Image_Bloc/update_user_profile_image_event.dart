@@ -8,7 +8,8 @@ sealed class UpdateUserProfileImageEvent {
 class UpdateUserProfilePhotoWithGivenImageEvent
     extends UpdateUserProfileImageEvent {
   final File selectedUserImage;
+  final String imageName;
 
   const UpdateUserProfilePhotoWithGivenImageEvent(
-      {required this.selectedUserImage});
+      {required this.selectedUserImage, required this.imageName});
 }

@@ -1,8 +1,8 @@
-part of 'pick_user_image_from_device_bloc.dart';
+// part of 'pick_user_image_from_device_bloc.dart';
 
-@immutable
-sealed class PickUserImageFromDeviceEvent {}
+// @immutable
+// sealed class PickUserImageFromDeviceEvent {}
 
-class FetchImageFromCameraEvent extends PickUserImageFromDeviceEvent {}
+// class FetchImageFromCameraEvent extends PickUserImageFromDeviceEvent {}
 
-class FetchImageFromGalleryEvent extends PickUserImageFromDeviceEvent {}
+// class FetchImageFromGalleryEvent extends PickUserImageFromDeviceEvent {}

@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:chatty/Model/Image_Picker/image_pick_from_device.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Pick_User_Image_From_Device_Bloc/pick_user_image_from_device_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Update_User_Profile_Image_Bloc/update_user_profile_image_bloc.dart';
+import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Data_To_Firebase_Firestore/upload_suer_data_to_firebase_firestore_bloc.dart';
+import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Profile_Image_To_firebase_Storage_Bloc/upload_user_profile_image_to_firebase_storage_bloc.dart';
 import 'package:chatty/View_Models/Navigation/on_generate_route_navigation.dart';
 import 'package:chatty/Views/Screens/chat_main_page_design.dart';
 import 'package:chatty/Views/Screens/splash_screen.dart';
@@ -21,8 +23,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -40,7 +42,23 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        home: const UpdateUserProfileDataScreen(),
+        // onGenerateRoute: onGenerateRoute,
+        // initialRoute: SplashScreen.pageName,
+        // home: const ChatDetailedScreen()
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  UploadUserProfileImageToFirebaseStorageBloc(),
+            ),
+            BlocProvider(
+              create: (context) => UploadSuerDataToFirebaseFirestoreBloc(),
+            ),
+          ],
+          child: const UpdateUserProfileDataScreen(),
+        ),
+        // home: const ChatMainPageDesign(),
+        // home: const ImageTest(),
       ),
     );
   }
@@ -58,8 +76,8 @@ class ImageTest extends StatelessWidget {
             Center(
               child: ElevatedButton(
                   onPressed: () async {
-                    File? image = await ImagePickFromDevice.pickImageFromDevice(
-                        ImagePickFromDevice.gallerySelected);
+                    // File? image = await ImagePickFromDevice.pickImageFromDevice(
+                    //     ImagePickFromDevice.gallerySelected);
                   },
                   child: const Text("Pick Image")),
             )

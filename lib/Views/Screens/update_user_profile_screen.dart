@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:chatty/Model/Image_Picker/image_pick_from_device.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Pick_User_Image_From_Device_Bloc/pick_user_image_from_device_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Update_User_Profile_Image_Bloc/update_user_profile_image_bloc.dart';
+import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Data_To_Firebase_Firestore/upload_suer_data_to_firebase_firestore_bloc.dart';
+import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Profile_Image_To_firebase_Storage_Bloc/upload_user_profile_image_to_firebase_storage_bloc.dart';
+import 'package:chatty/View_Models/Firebase/firebase_cloud_storage.dart';
 import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/update_user_profile.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
 
@@ -32,6 +36,8 @@ class UpdateUserProfileDataScreen extends StatefulWidget {
 late TextEditingController _userNameFirstTextEditingController;
 late TextEditingController _userNameLastTextEditingController;
 File? userSelectedImage;
+FirebaseCloudStorage firebaseCloudStorage = FirebaseCloudStorage();
+String? uploadedUserImageURL;
 
 final formState = GlobalKey<FormState>();
 
@@ -42,6 +48,15 @@ class _UpdateUserProfileDataScreenState
     super.didChangeDependencies();
     _userNameFirstTextEditingController = TextEditingController();
     _userNameLastTextEditingController = TextEditingController();
+  }
+
+  void uploadImageToFirebaseStorage(
+      {required String mobileNumber, required File imageFile}) async {
+    String imageUrl =
+        await firebaseCloudStorage.uploadImageToFirebaseCloudStorage(
+            imageFile: imageFile, mobileNumber: mobileNumber);
+
+    developer.log("Image Urll  ....... $imageUrl");
   }
 
   @override
@@ -97,6 +112,8 @@ class _UpdateUserProfileDataScreenState
                           } else if (state
                               is UpdateUserProfileImageLoadedState) {
                             developer.log("Loadeddddddd Stateeeee .....");
+                            userSelectedImage = state.userSelectedImage;
+
                             return Container(
                               width: width * 0.45,
                               height: width * 0.45,
@@ -104,7 +121,7 @@ class _UpdateUserProfileDataScreenState
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                       image: FileImage(state.userSelectedImage),
-                                      fit: BoxFit.cover),
+                                      fit: BoxFit.contain),
                                   border:
                                       Border.all(color: Colors.cyan, width: 3)),
                             );
@@ -154,7 +171,10 @@ class _UpdateUserProfileDataScreenState
                                         Expanded(
                                           child: InkWell(
                                             onTap: () async {
-                                              File? selectedImage =
+                                              (
+                                                File? pickedImageFile,
+                                                String pickedImageFileName
+                                              )? selectedImage =
                                                   await ImagePickFromDevice
                                                       .pickImageFromDevice(
                                                           ImagePickFromDevice
@@ -165,17 +185,13 @@ class _UpdateUserProfileDataScreenState
                                                       UpdateUserProfileImageBloc>()
                                                   .add(
                                                       UpdateUserProfilePhotoWithGivenImageEvent(
+                                                          imageName:
+                                                              selectedImage!.$2,
                                                           selectedUserImage:
-                                                              selectedImage!));
-
-                                              // setState(() {
-                                              //   userSelectedImage =
-                                              //       selectedImage!;
-                                              // });
+                                                              selectedImage
+                                                                  .$1!));
 
                                               Navigator.of(context).pop();
-                                              // developer
-                                              //     .log("camera is clicked");
                                             },
                                             child: const Column(
                                               mainAxisAlignment:
@@ -202,7 +218,10 @@ class _UpdateUserProfileDataScreenState
                                         Expanded(
                                           child: InkWell(
                                             onTap: () async {
-                                              File? selectedImage =
+                                              (
+                                                File? pickedImageFile,
+                                                String pickedImageFileName
+                                              )? selectedImage =
                                                   await ImagePickFromDevice
                                                       .pickImageFromDevice(
                                                           ImagePickFromDevice
@@ -213,18 +232,13 @@ class _UpdateUserProfileDataScreenState
                                                       UpdateUserProfileImageBloc>()
                                                   .add(
                                                       UpdateUserProfilePhotoWithGivenImageEvent(
+                                                          imageName:
+                                                              selectedImage!.$2,
                                                           selectedUserImage:
-                                                              selectedImage!));
-
-                                              // setState(() {
-                                              //   userSelectedImage =
-                                              //       selectedImage!;
-                                              // });
+                                                              selectedImage
+                                                                  .$1!));
 
                                               Navigator.of(context).pop();
-
-                                              // developer
-                                              //     .log("gallery is clicked");
                                             },
                                             child: const Column(
                                               mainAxisAlignment:
@@ -278,25 +292,84 @@ class _UpdateUserProfileDataScreenState
                   style: TextStyle(color: Colors.cyan),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  if (formState.currentState!.validate()) {
-                    developer.log("Navigate Successfully to next page......");
+              BlocBuilder<UploadUserProfileImageToFirebaseStorageBloc,
+                  UploadUserProfileImageToFirebaseStorageState>(
+                builder: (context, state) {
+                  if (state
+                      is UploadUserProfileImageToFirebaseStorageInitialState) {
+                    return InkWell(
+                      onTap: () {
+                        if (formState.currentState!.validate()) {
+                          if (userSelectedImage != null) {
+                            context
+                                .read<
+                                    UploadUserProfileImageToFirebaseStorageBloc>()
+                                .add(
+                                    UploadUserPickedProfileImageToFirebaseStorageEvent(
+                                        imageFile: userSelectedImage!,
+                                        userMobileNumber: "03007853886"));
+                          }
+                        }
+                      },
+                      child: Container(
+                        width: width * 0.75,
+                        height: 65,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(color: Colors.cyan, width: 2)),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "Agree & Continue",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.cyan, fontSize: 18),
+                        ),
+                      ),
+                    );
+                  } else if (state
+                      is UploadUserProfileImageToFirebaseStorageLoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.cyan,
+                        strokeWidth: 5,
+                      ),
+                    );
+                  } else if (state
+                      is UploadUserProfileImageToFirebaseStorageLoadedState) {
+                    uploadedUserImageURL = state.uploadedUserImageURL;
+                    return BlocBuilder<UploadSuerDataToFirebaseFirestoreBloc,
+                        UploadSuerDataToFirebaseFirestoreState>(
+                      builder: (context, state) {
+                        if (state
+                            is UploadSuerDataToFirebaseFirestoreInitialState) {
+                          if (uploadedUserImageURL != null ||
+                              uploadedUserImageURL!.isNotEmpty) {
+                            context
+                                .read<UploadSuerDataToFirebaseFirestoreBloc>()
+                                .add(
+                                    UploadUserProvidedDataToFirebaseFireStoreEvent(
+                                        userDeviceToken: "12345678",
+                                        userFirstName:
+                                            _userNameFirstTextEditingController
+                                                .text,
+                                        userLastName:
+                                            _userNameLastTextEditingController
+                                                .text,
+                                        userPhoneNumber: "03038738355",
+                                        userImageUrl: uploadedUserImageURL!));
+                          }
+                        } else if (state
+                            is UploadSuerDataToFirebaseFirestoreLoadingState) {
+                        } else if (state
+                            is UploadSuerDataToFirebaseFirestoreLoadedState) {
+                          developer.log("Navigate Successfully");
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    );
+                  } else {
+                    return const SizedBox.shrink();
                   }
                 },
-                child: Container(
-                  width: width * 0.75,
-                  height: 65,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: Colors.cyan, width: 2)),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    "Agree & Continue",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.cyan, fontSize: 18),
-                  ),
-                ),
               )
             ],
           ),
