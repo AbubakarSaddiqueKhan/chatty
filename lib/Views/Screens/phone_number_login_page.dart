@@ -1,5 +1,4 @@
 import 'package:chatty/View_Models/Authentication/firebase_phone_number_authentication.dart';
-import 'package:chatty/Views/Screens/otp_verifying_screen.dart';
 import 'package:chatty/Views/Widgets/Phone_Number_Login_Screens/enter_phone_number_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -65,9 +64,10 @@ class _PhoneNumberLoginPageState extends State<PhoneNumberLoginPage> {
                               if (formKey.currentState!.validate()) {
                                 PhoneAuthentication
                                     .sendVerificationCodeToPhoneNumber(
-                                        _phoneNumberTextEditingController.text);
-                                // Navigator.of(context)
-                                //     .pushNamed(OTPVerifyingScreen.pageName);
+                                        phoneNumber:
+                                            _phoneNumberTextEditingController
+                                                .text,
+                                        context: context);
                               }
                             },
                             child: Container(

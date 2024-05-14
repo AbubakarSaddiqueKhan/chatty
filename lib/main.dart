@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:chatty/Model/Image_Picker/image_pick_from_device.dart';
+import 'package:chatty/View_Models/Blocs/Firebase_Cloud_Messaging_Blocs/Fetch_User_Device_Token_Bloc/fetch_user_device_token_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Pick_User_Image_From_Device_Bloc/pick_user_image_from_device_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Update_User_Profile_Image_Bloc/update_user_profile_image_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Data_To_Firebase_Firestore/upload_suer_data_to_firebase_firestore_bloc.dart';
@@ -13,7 +14,7 @@ import 'package:chatty/Views/Screens/update_user_profile_screen.dart';
 import 'package:chatty/Views/Widgets/Chat_Detailed_Screen_Widgets/message_Received_to_user_custom_widget.dart';
 import 'package:chatty/Views/Widgets/Chat_Detailed_Screen_Widgets/message_send_from_user_custom_widget.dart';
 import 'package:chatty/Views/Widgets/Chat_Main_Page_Widgets/chat_main_page_custom_list_tile.dart';
-import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/update_user_profile.dart';
+import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/update_user_profile_text_form_field.dart';
 import 'package:chatty/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,21 +43,24 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        // onGenerateRoute: onGenerateRoute,
-        // initialRoute: SplashScreen.pageName,
+        onGenerateRoute: onGenerateRoute,
+        initialRoute: SplashScreen.pageName,
         // home: const ChatDetailedScreen()
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) =>
-                  UploadUserProfileImageToFirebaseStorageBloc(),
-            ),
-            BlocProvider(
-              create: (context) => UploadSuerDataToFirebaseFirestoreBloc(),
-            ),
-          ],
-          child: const UpdateUserProfileDataScreen(),
-        ),
+        // home: MultiBlocProvider(
+        //   providers: [
+        //     BlocProvider(
+        //       create: (context) => FetchUserDeviceTokenBloc(),
+        //     ),
+        //     BlocProvider(
+        //       create: (context) =>
+        //           UploadUserProfileImageToFirebaseStorageBloc(),
+        //     ),
+        //     BlocProvider(
+        //       create: (context) => UploadSuerDataToFirebaseFirestoreBloc(),
+        //     ),
+        //   ],
+        //   child: const UpdateUserProfileDataScreen(),
+        // ),
         // home: const ChatMainPageDesign(),
         // home: const ImageTest(),
       ),

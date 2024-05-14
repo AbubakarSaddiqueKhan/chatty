@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class ChatMainPageDesign extends StatelessWidget {
   const ChatMainPageDesign({super.key});
+  static const String pageName = "/chatMainPageDesign";
 
   @override
   Widget build(BuildContext context) {

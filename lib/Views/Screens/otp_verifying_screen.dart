@@ -1,3 +1,4 @@
+import 'package:chatty/Views/Screens/update_user_profile_screen.dart';
 import 'package:chatty/Views/Widgets/OTP_Verifying_Screen_Widgets/enter_otp_custom_widgets_list.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
@@ -9,6 +10,9 @@ class OTPVerifyingScreen extends StatefulWidget {
   @override
   State<OTPVerifyingScreen> createState() => _OTPVerifyingScreenState();
 }
+
+late String userMobilePhoneNumber;
+// late String userOtpCode;
 
 late TextEditingController _otpFirstDigitTextEditingController;
 late TextEditingController _otpSecondDigitTextEditingController;
@@ -27,6 +31,11 @@ class _OTPVerifyingScreenState extends State<OTPVerifyingScreen> {
     _otpForthDigitTextEditingController = TextEditingController();
     _otpFifthDigitTextEditingController = TextEditingController();
     _otpSixthDigitTextEditingController = TextEditingController();
+
+    userMobilePhoneNumber =
+        ModalRoute.of(context)!.settings.arguments as String;
+
+    // userOtpCode = userDataRecord.$2;
   }
 
   @override
@@ -65,9 +74,22 @@ class _OTPVerifyingScreenState extends State<OTPVerifyingScreen> {
                   _otpForthDigitTextEditingController.text.isEmpty ||
                   _otpFifthDigitTextEditingController.text.isEmpty ||
                   _otpSixthDigitTextEditingController.text.isEmpty) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(content: Text("Invalid OTP")));
                 developer.log("Errrrrrrrrrrrrrrrrrrrrr");
               } else {
-                developer.log("Sucesssss................");
+                String currentEnteredOTP =
+                    "${_otpFirstDigitTextEditingController.text}${_otpSecondDigitTextEditingController.text}${_otpThirdDigitTextEditingController.text}${_otpForthDigitTextEditingController.text}${_otpFifthDigitTextEditingController.text}${_otpSixthDigitTextEditingController.text}";
+                developer.log("Entered Otp..............$currentEnteredOTP");
+
+                Navigator.of(context).pop(currentEnteredOTP);
+                // if (currentEnteredOTP.compareTo(userOtpCode) == 0) {
+                //   Navigator.of(context).pushNamed(
+                //       UpdateUserProfileDataScreen.pageName,
+                //       arguments: userOtpCode);
+                // }
+
+                // developer.log("Received Otp..............$userOtpCode");
               }
             },
             child: Container(
