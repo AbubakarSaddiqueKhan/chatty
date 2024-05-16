@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:developer' as developer;
 import 'package:bloc/bloc.dart';
-import 'package:chatty/View_Models/Firebase/firebase_cloud_storage.dart';
+import 'package:chatty/View_Models/Firebase/Firebase_Cloud_Storage/firebase_cloud_storage.dart';
 import 'package:meta/meta.dart';
 
 part 'upload_user_profile_image_to_firebase_storage_event.dart';

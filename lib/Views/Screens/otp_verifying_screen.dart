@@ -11,7 +11,6 @@ class OTPVerifyingScreen extends StatefulWidget {
   State<OTPVerifyingScreen> createState() => _OTPVerifyingScreenState();
 }
 
-late String userMobilePhoneNumber;
 // late String userOtpCode;
 
 late TextEditingController _otpFirstDigitTextEditingController;
@@ -22,6 +21,8 @@ late TextEditingController _otpFifthDigitTextEditingController;
 late TextEditingController _otpSixthDigitTextEditingController;
 
 class _OTPVerifyingScreenState extends State<OTPVerifyingScreen> {
+  late String userMobilePhoneNumber;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

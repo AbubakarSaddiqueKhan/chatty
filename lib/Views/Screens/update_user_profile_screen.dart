@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:chatty/View_Models/Blocs/Firebase_Cloud_Messaging_Blocs/Fetch_User_Device_Token_Bloc/fetch_user_device_token_bloc.dart';
 
-import 'package:chatty/View_Models/Firebase/firebase_cloud_storage.dart';
+import 'package:chatty/View_Models/Firebase/Firebase_Cloud_Storage/firebase_cloud_storage.dart';
 import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/update_user_profile_screen_all_Widgets_list.dart';
 
 import 'package:flutter/material.dart';
@@ -36,10 +36,6 @@ late TextEditingController _userNameLastTextEditingController;
 
 FirebaseCloudStorage firebaseCloudStorage = FirebaseCloudStorage();
 
-late String userPhoneNumber;
-
-final formState = GlobalKey<FormState>();
-
 class _UpdateUserProfileDataScreenState
     extends State<UpdateUserProfileDataScreen> {
   @override
@@ -48,7 +44,6 @@ class _UpdateUserProfileDataScreenState
     _userNameFirstTextEditingController = TextEditingController();
     _userNameLastTextEditingController = TextEditingController();
     context.read<FetchUserDeviceTokenBloc>().add(FetchUserDeviceTokenEvent());
-    userPhoneNumber = ModalRoute.of(context)!.settings.arguments as String;
   }
 
   void uploadImageToFirebaseStorage(
@@ -64,14 +59,11 @@ class _UpdateUserProfileDataScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Form(
-            key: formState,
-            child: UpdateUserProfileScreenAllWidgetsList(
-                userNameFirstTextEditingController:
-                    _userNameFirstTextEditingController,
-                userMobileNumber: userPhoneNumber,
-                userNameLastTextEditingController:
-                    _userNameLastTextEditingController)),
+        child: UpdateUserProfileScreenAllWidgetsList(
+            userNameFirstTextEditingController:
+                _userNameFirstTextEditingController,
+            userNameLastTextEditingController:
+                _userNameLastTextEditingController),
       ),
     );
   }

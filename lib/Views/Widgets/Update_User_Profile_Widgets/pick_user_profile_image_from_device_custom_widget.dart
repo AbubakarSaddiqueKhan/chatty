@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chatty/Model/Image_Picker/image_pick_from_device.dart';
+import 'package:chatty/View_Models/Custom_Codes/Image_Picker/image_pick_from_device.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Update_User_Profile_Image_Bloc/update_user_profile_image_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

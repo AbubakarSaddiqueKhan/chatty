@@ -1,29 +1,64 @@
-import 'dart:io';
-
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Data_To_Firebase_Firestore/upload_suer_data_to_firebase_firestore_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Profile_Image_To_firebase_Storage_Bloc/upload_user_profile_image_to_firebase_storage_bloc.dart';
+import 'package:chatty/View_Models/Local_Database/shared_preference_locaal_data_base.dart';
 import 'package:chatty/Views/Screens/chat_main_page_design.dart';
+import 'package:chatty/Views/Screens/find_user_screen.dart';
 import 'package:chatty/Views/Screens/update_user_profile_screen.dart';
+import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/update_user_profile_screen_all_Widgets_list.dart';
 import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/user_profile_image_bloc_builder_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:developer' as developer;
 
-class NavigateToNextPageChatMainPageCustomButton extends StatelessWidget {
+class NavigateToNextPageChatMainPageCustomButton extends StatefulWidget {
   const NavigateToNextPageChatMainPageCustomButton(
       {super.key,
       required this.userNameFirstTextEditingController,
-      required this.userMobileNumber,
+      // required this.userMobileNumber,
       required this.userDeviceToken,
       required this.userNameLastTextEditingController});
   final TextEditingController userNameFirstTextEditingController;
   final TextEditingController userNameLastTextEditingController;
-  final String userMobileNumber;
+  // final String userMobileNumber;
 
   final String userDeviceToken;
 
-  void navigateToChatMainPage({required BuildContext context}) {
+  @override
+  State<NavigateToNextPageChatMainPageCustomButton> createState() =>
+      _NavigateToNextPageChatMainPageCustomButtonState();
+}
+
+class _NavigateToNextPageChatMainPageCustomButtonState
+    extends State<NavigateToNextPageChatMainPageCustomButton> {
+  late String? userMobilePhoneNumber;
+
+  @override
+  void didChangeDependencies() async {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    SharedPreferenceLocalDataBase sharedPreferenceLocalDataBase =
+        SharedPreferenceLocalDataBase();
+    userMobilePhoneNumber = await sharedPreferenceLocalDataBase
+        .fetchUserPhoneNumberFromLocalDatabase();
+  }
+
+  void navigateToChatMainPage(
+      {required String uploadedUserImageURL,
+      required BuildContext context}) async {
+    if (userMobilePhoneNumber != null) {
+      if (userMobilePhoneNumber!.isNotEmpty) {
+        developer.log("User fetched mobile phone number");
+      }
+    }
+    await fireBaseFireStoreDatBase.addUserDatToFirebaseStorage(
+        userDeviceToken: widget.userDeviceToken,
+        userFirstName: widget.userNameFirstTextEditingController.text,
+        userLastName: widget.userNameLastTextEditingController.text,
+        userPhoneNumber: userMobilePhoneNumber!,
+        userImageUrl: uploadedUserImageURL);
+
+    developer.log("Data adeeddddd sucessssssss......");
     Navigator.of(context).pushNamed(ChatMainPageDesign.pageName);
   }
 
@@ -39,7 +74,7 @@ class NavigateToNextPageChatMainPageCustomButton extends StatelessWidget {
           return InkWell(
             onTap: () {
               developer.log("Clickedddddd");
-              if (formState.currentState!.validate()) {
+              if (formStateCustom.currentState!.validate()) {
                 developer.log("image nullll");
                 if (userSelectedImage != null) {
                   developer.log("Uploadig imageeeee");
@@ -47,7 +82,7 @@ class NavigateToNextPageChatMainPageCustomButton extends StatelessWidget {
                       .read<UploadUserProfileImageToFirebaseStorageBloc>()
                       .add(UploadUserPickedProfileImageToFirebaseStorageEvent(
                           imageFile: userSelectedImage!,
-                          userMobileNumber: userMobileNumber));
+                          userMobileNumber: userMobilePhoneNumber!));
 
                   developer.log("Uploadeddddd imageeeee");
                 } else {
@@ -86,38 +121,19 @@ class NavigateToNextPageChatMainPageCustomButton extends StatelessWidget {
 
           uploadedUserImageURL = state.uploadedUserImageURL;
 
-          return BlocBuilder<UploadSuerDataToFirebaseFirestoreBloc,
-              UploadSuerDataToFirebaseFirestoreState>(
-            builder: (context, state) {
-              if (state is UploadSuerDataToFirebaseFirestoreInitialState) {
-                developer.log("Firestore initialllllll");
-
-                if ((uploadedUserImageURL != null ||
-                    uploadedUserImageURL!.isNotEmpty)) {
-                  context.read<UploadSuerDataToFirebaseFirestoreBloc>().add(
-                      UploadUserProvidedDataToFirebaseFireStoreEvent(
-                          userDeviceToken: userDeviceToken!,
-                          userFirstName:
-                              userNameFirstTextEditingController.text,
-                          userLastName: userNameLastTextEditingController.text,
-                          userPhoneNumber: userMobileNumber,
-                          userImageUrl: uploadedUserImageURL!));
-                }
-              } else if (state
-                  is UploadSuerDataToFirebaseFirestoreLoadingState) {
-                developer.log("Firestore loadidnggggg");
-              } else if (state
-                  is UploadSuerDataToFirebaseFirestoreLoadedState) {
-                developer.log("Navigate Successfully");
-                navigateToChatMainPage(context: context);
-              }
-              return const SizedBox.shrink();
-            },
-          );
-        } else {
-          developer.log("Upload Errorrrr");
+          navigateToChatMainPage(
+              uploadedUserImageURL: uploadedUserImageURL!, context: context);
 
           return const SizedBox.shrink();
+        } else {
+          developer.log("Upload Errorrrr");
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.tealAccent,
+              strokeWidth: 5,
+            ),
+          );
+          // return const SizedBox.shrink();
         }
       },
     );

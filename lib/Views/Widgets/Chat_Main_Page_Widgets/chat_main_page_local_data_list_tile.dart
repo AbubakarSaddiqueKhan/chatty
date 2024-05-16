@@ -1,10 +1,7 @@
-import 'package:chatty/Model/user_contact_detail_data_model.dart';
 import 'package:flutter/material.dart';
 
-class ChatMainPageCustomUserDataListTile extends StatelessWidget {
-  const ChatMainPageCustomUserDataListTile(
-      {super.key, required this.userContactDetailData});
-  final UserContactDetail userContactDetailData;
+class ChatMainPageLocalDataListTile extends StatelessWidget {
+  const ChatMainPageLocalDataListTile({super.key});
 
   static const String pageName = "/chatMainPage";
   @override
@@ -24,26 +21,26 @@ class ChatMainPageCustomUserDataListTile extends StatelessWidget {
               width: height * 0.09,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(userContactDetailData.userImageUrl),
-                      fit: BoxFit.contain),
+                  image: const DecorationImage(
+                      image: AssetImage("assets/images/user.png"),
+                      fit: BoxFit.cover),
                   border: Border.all(width: 1, color: Colors.blueGrey)),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
+          const Padding(
+            padding: EdgeInsets.only(left: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  userContactDetailData.userFirstName,
-                  style: const TextStyle(
+                  "Developer",
+                  style: TextStyle(
                       color: Colors.cyan,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
-                const Text(
+                Text(
                   "Assalam O Alaikum",
                   style: TextStyle(
                     color: Colors.cyan,

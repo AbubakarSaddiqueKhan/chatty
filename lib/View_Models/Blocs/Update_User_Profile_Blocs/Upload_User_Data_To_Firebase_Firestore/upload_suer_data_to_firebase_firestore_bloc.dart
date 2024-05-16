@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:bloc/bloc.dart';
-import 'package:chatty/View_Models/Firebase/firebase_fire_store.dart';
+import 'package:chatty/View_Models/Firebase/Firebase_Firestore_Database/firebase_fire_store.dart';
 import 'package:meta/meta.dart';
 
 part 'upload_suer_data_to_firebase_firestore_event.dart';

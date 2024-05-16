@@ -1,3 +1,4 @@
+import 'package:chatty/View_Models/Blocs/Phone_Number_Page_Blocs/Add_User_Phone_Number_To_LOcal_Database/add_user_phone_number_to_local_database_bloc.dart';
 import 'package:chatty/Views/Screens/otp_verifying_screen.dart';
 import 'package:chatty/Views/Screens/update_user_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,6 +6,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PhoneAuthentication {
   static void sendVerificationCodeToPhoneNumber(
@@ -21,8 +23,12 @@ class PhoneAuthentication {
           // In android it will automatically authenticate user on otp received without entering the otp
           await firebaseAuth.signInWithCredential(phoneAuthCredential);
           developer.log("Navigate to home User Profile page ............");
-          Navigator.of(context).pushNamed(UpdateUserProfileDataScreen.pageName,
-              arguments: phoneNumber);
+          context.read<AddUserPhoneNumberToLocalDatabaseBloc>().add(
+              AddGivenUserPhoneNumberToLocalDatabaseSharedPreferenceEvent(
+                  userPhoneNumber: userPhoneNumber));
+          Navigator.of(context).pushNamed(
+            UpdateUserProfileDataScreen.pageName,
+          );
         },
         verificationFailed: (error) {
           if (error.code == 'invalid-phone-number') {
@@ -36,20 +42,31 @@ class PhoneAuthentication {
         codeSent: (verificationId, forceResendingToken) async {
           // developer.log("Token .. Forcedddd ... $forceResendingToken");
 
-          String currentEnteredOTP = await Navigator.of(context).pushNamed(
-              OTPVerifyingScreen.pageName,
-              arguments: phoneNumber) as String;
+          try {
+            String currentEnteredOTP = await Navigator.of(context).pushNamed(
+                OTPVerifyingScreen.pageName,
+                arguments: phoneNumber) as String;
 
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: currentEnteredOTP);
+            PhoneAuthCredential credential = PhoneAuthProvider.credential(
+                verificationId: verificationId, smsCode: currentEnteredOTP);
 
-          // Sign the user in (or link) with the credential
-          await firebaseAuth.signInWithCredential(credential);
+            // Sign the user in (or link) with the credential
+            await firebaseAuth.signInWithCredential(credential);
+          } catch (e) {
+            developer.log(e.toString());
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(e.toString())));
+          }
 
           developer.log("Navigate to otp screeeen .............");
 
-          Navigator.of(context).pushNamed(UpdateUserProfileDataScreen.pageName,
-              arguments: phoneNumber);
+          context.read<AddUserPhoneNumberToLocalDatabaseBloc>().add(
+              AddGivenUserPhoneNumberToLocalDatabaseSharedPreferenceEvent(
+                  userPhoneNumber: userPhoneNumber));
+
+          Navigator.of(context).pushNamed(
+            UpdateUserProfileDataScreen.pageName,
+          );
         },
         codeAutoRetrievalTimeout: (verificationId) {
           developer.log("Oops !! verification Time Out");

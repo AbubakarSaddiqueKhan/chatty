@@ -1,4 +1,4 @@
-import 'package:chatty/View_Models/Authentication/firebase_phone_number_authentication.dart';
+import 'package:chatty/View_Models/Firebase/Authentication/firebase_phone_number_authentication.dart';
 import 'package:chatty/Views/Widgets/Phone_Number_Login_Screens/enter_phone_number_text_form_field.dart';
 import 'package:flutter/material.dart';
 

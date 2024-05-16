@@ -1,7 +1,10 @@
+import 'package:chatty/Views/Widgets/Update_User_Profile_Widgets/user_profile_image_bloc_builder_widget.dart';
 import 'package:flutter/material.dart';
 
 class MessageReceivedToUserCustomWidget extends StatelessWidget {
-  const MessageReceivedToUserCustomWidget({super.key});
+  const MessageReceivedToUserCustomWidget(
+      {super.key, required this.userContactImageUrl});
+  final String userContactImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +49,11 @@ class MessageReceivedToUserCustomWidget extends StatelessWidget {
                         width: width,
                         height: height * 0.1,
                         decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                  "assets/images/user.png",
-                                ),
+                            image: DecorationImage(
+                                image: NetworkImage(userContactImageUrl),
                                 fit: BoxFit.contain),
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.green, width: 2)),
+                            border: Border.all(color: Colors.green, width: 1)),
                       ),
                     )),
               ],

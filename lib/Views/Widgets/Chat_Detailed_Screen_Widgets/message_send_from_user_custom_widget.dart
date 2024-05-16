@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MessageSendFromUserCustomWidget extends StatelessWidget {
-  const MessageSendFromUserCustomWidget({super.key});
+  const MessageSendFromUserCustomWidget(
+      {super.key, required this.userImageUrl});
+  final String userImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +26,11 @@ class MessageSendFromUserCustomWidget extends StatelessWidget {
                         width: width,
                         height: height * 0.1,
                         decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                  "assets/images/user.png",
-                                ),
+                            image: DecorationImage(
+                                image: NetworkImage(userImageUrl),
                                 fit: BoxFit.contain),
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.green, width: 2)),
+                            border: Border.all(color: Colors.green, width: 1)),
                       ),
                     )),
                 Expanded(
