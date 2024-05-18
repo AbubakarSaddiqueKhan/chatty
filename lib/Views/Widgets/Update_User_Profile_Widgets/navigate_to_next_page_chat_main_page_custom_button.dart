@@ -1,5 +1,6 @@
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Data_To_Firebase_Firestore/upload_suer_data_to_firebase_firestore_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Upload_User_Profile_Image_To_firebase_Storage_Bloc/upload_user_profile_image_to_firebase_storage_bloc.dart';
+import 'package:chatty/View_Models/Firebase/Firebase_Firestore_Database/firebase_fire_store.dart';
 import 'package:chatty/View_Models/Local_Database/shared_preference_locaal_data_base.dart';
 import 'package:chatty/Views/Screens/chat_main_page_design.dart';
 import 'package:chatty/Views/Screens/find_user_screen.dart';
@@ -32,6 +33,8 @@ class NavigateToNextPageChatMainPageCustomButton extends StatefulWidget {
 class _NavigateToNextPageChatMainPageCustomButtonState
     extends State<NavigateToNextPageChatMainPageCustomButton> {
   late String? userMobilePhoneNumber;
+  FireBaseFireStoreDatBase fireBaseFireStoreDatBase =
+      FireBaseFireStoreDatBase();
 
   @override
   void didChangeDependencies() async {
@@ -133,7 +136,6 @@ class _NavigateToNextPageChatMainPageCustomButtonState
               strokeWidth: 5,
             ),
           );
-          // return const SizedBox.shrink();
         }
       },
     );

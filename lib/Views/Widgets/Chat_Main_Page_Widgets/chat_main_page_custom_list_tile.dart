@@ -6,7 +6,6 @@ class ChatMainPageCustomUserDataListTile extends StatelessWidget {
       {super.key, required this.userContactDetailData});
   final UserContactDetail userContactDetailData;
 
-  static const String pageName = "/chatMainPage";
   @override
   Widget build(BuildContext context) {
     final Size(:width, :height) = MediaQuery.sizeOf(context);
@@ -44,8 +43,10 @@ class ChatMainPageCustomUserDataListTile extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 const Text(
-                  "Assalam O Alaikum",
+                  ".....",
                   style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                     color: Colors.cyan,
                   ),
                 )

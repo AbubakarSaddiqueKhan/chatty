@@ -1,5 +1,5 @@
 import 'package:chatty/View_Models/Firebase/Authentication/firebase_phone_number_authentication.dart';
-import 'package:chatty/Views/Widgets/Phone_Number_Login_Screens/enter_phone_number_text_form_field.dart';
+import 'package:chatty/Views/Widgets/Phone_Number_Login_Screens_Widgets/enter_phone_number_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class PhoneNumberLoginPage extends StatefulWidget {
@@ -16,9 +16,18 @@ final formKey = GlobalKey<FormState>();
 
 class _PhoneNumberLoginPageState extends State<PhoneNumberLoginPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     _phoneNumberTextEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    _phoneNumberTextEditingController.dispose();
+    super.dispose();
   }
 
   @override

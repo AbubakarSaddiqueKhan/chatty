@@ -24,14 +24,31 @@ class _OTPVerifyingScreenState extends State<OTPVerifyingScreen> {
   late String userMobilePhoneNumber;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     _otpFirstDigitTextEditingController = TextEditingController();
     _otpSecondDigitTextEditingController = TextEditingController();
     _otpThirdDigitTextEditingController = TextEditingController();
     _otpForthDigitTextEditingController = TextEditingController();
     _otpFifthDigitTextEditingController = TextEditingController();
     _otpSixthDigitTextEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _otpFirstDigitTextEditingController.dispose();
+    _otpSecondDigitTextEditingController.dispose();
+    _otpThirdDigitTextEditingController.dispose();
+    _otpForthDigitTextEditingController.dispose();
+    _otpFifthDigitTextEditingController.dispose();
+    _otpSixthDigitTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     userMobilePhoneNumber =
         ModalRoute.of(context)!.settings.arguments as String;
@@ -84,13 +101,6 @@ class _OTPVerifyingScreenState extends State<OTPVerifyingScreen> {
                 developer.log("Entered Otp..............$currentEnteredOTP");
 
                 Navigator.of(context).pop(currentEnteredOTP);
-                // if (currentEnteredOTP.compareTo(userOtpCode) == 0) {
-                //   Navigator.of(context).pushNamed(
-                //       UpdateUserProfileDataScreen.pageName,
-                //       arguments: userOtpCode);
-                // }
-
-                // developer.log("Received Otp..............$userOtpCode");
               }
             },
             child: Container(

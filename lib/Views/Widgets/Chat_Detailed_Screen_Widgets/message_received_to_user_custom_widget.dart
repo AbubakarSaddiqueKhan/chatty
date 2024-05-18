@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class MessageReceivedToUserCustomWidget extends StatelessWidget {
   const MessageReceivedToUserCustomWidget(
-      {super.key, required this.userContactImageUrl});
+      {super.key, required this.userContactImageUrl, required this.message});
   final String userContactImageUrl;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,9 @@ class MessageReceivedToUserCustomWidget extends StatelessWidget {
                                 bottomLeft: Radius.circular(15),
                                 bottomRight: Radius.circular(15))),
                         alignment: Alignment.centerRight,
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text("Walaikum Assalam"),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(message),
                         ),
                       ),
                     )),

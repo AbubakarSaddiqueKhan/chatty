@@ -46,8 +46,7 @@ class FetchUserDataFromFirestoreBloc extends Bloc<
       String userPhoneNumberData =
           userData?[FireBaseFireStoreDatBase.keyUserPhoneNumber];
 
-      String userLastName =
-          userData?[FireBaseFireStoreDatBase.keyUserPhoneNumber];
+      String userLastName = userData?[FireBaseFireStoreDatBase.keyUserLastName];
 
       UserContactDetail userContactDetail = UserContactDetail(
           userDeviceToken: userDeviceToken,

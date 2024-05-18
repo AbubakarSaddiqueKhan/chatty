@@ -1,3 +1,4 @@
+import 'package:chatty/View_Models/Blocs/Chat_Detailed_Page_Blocs/Fetch_All_Chats_Of_Given_User_Bloc/fetch_all_chat_of_given_user_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Chat_Detailed_Page_Blocs/Fetch_User_Data_From_Firestore_Bloc/fetch_user_data_from_firestore_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Chat_Main_Page_Blocs/Display_User_Chat_Contacts_Data_Bloc/display_user_chat_contacts_data_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Firebase_Cloud_Messaging_Blocs/Fetch_User_Device_Token_Bloc/fetch_user_device_token_bloc.dart';
@@ -76,6 +77,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
+                create: (context) => FetchUserDataFromFirestoreBloc(),
+              ),
+              BlocProvider(
                 create: (context) => UpdateUserContactsLengthBloc(),
               ),
               BlocProvider(
@@ -90,8 +94,15 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     case ChatDetailedScreen.pageName:
       return CupertinoPageRoute(
         settings: settings,
-        builder: (context) => BlocProvider(
-          create: (context) => FetchUserDataFromFirestoreBloc(),
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => FetchUserDataFromFirestoreBloc(),
+            ),
+            BlocProvider(
+              create: (context) => FetchAllChatOfGivenUserBloc(),
+            ),
+          ],
           child: const ChatDetailedScreen(),
         ),
       );

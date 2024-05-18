@@ -1,6 +1,6 @@
 import 'package:chatty/View_Models/Firebase/Firebase_Firestore_Database/firebase_fire_store.dart';
 import 'package:chatty/View_Models/Local_Database/shared_preference_locaal_data_base.dart';
-import 'package:chatty/Views/Widgets/Phone_Number_Login_Screens/enter_phone_number_text_form_field.dart';
+import 'package:chatty/Views/Widgets/Phone_Number_Login_Screens_Widgets/enter_phone_number_text_form_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
@@ -16,9 +16,11 @@ class FindUserScreen extends StatefulWidget {
 
 late TextEditingController newContactPhoneNumberTextEditingController;
 final formState = GlobalKey<FormState>();
-FireBaseFireStoreDatBase fireBaseFireStoreDatBase = FireBaseFireStoreDatBase();
 
 class _FindUserScreenState extends State<FindUserScreen> {
+  FireBaseFireStoreDatBase fireBaseFireStoreDatBase =
+      FireBaseFireStoreDatBase();
+
   late String? userPhoneNumber;
 
   @override

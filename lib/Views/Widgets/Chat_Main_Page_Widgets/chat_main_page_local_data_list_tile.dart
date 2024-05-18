@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class ChatMainPageLocalDataListTile extends StatelessWidget {
   const ChatMainPageLocalDataListTile({super.key});
 
-  static const String pageName = "/chatMainPage";
   @override
   Widget build(BuildContext context) {
     final Size(:width, :height) = MediaQuery.sizeOf(context);

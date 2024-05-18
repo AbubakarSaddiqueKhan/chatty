@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class MessageSendFromUserCustomWidget extends StatelessWidget {
   const MessageSendFromUserCustomWidget(
-      {super.key, required this.userImageUrl});
+      {super.key, required this.userImageUrl, required this.message});
   final String userImageUrl;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +44,9 @@ class MessageSendFromUserCustomWidget extends StatelessWidget {
                               bottomLeft: Radius.circular(15),
                               bottomRight: Radius.circular(15))),
                       alignment: Alignment.centerLeft,
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text("Asslam O Alaikum"),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(message),
                       ),
                     ))
               ],
