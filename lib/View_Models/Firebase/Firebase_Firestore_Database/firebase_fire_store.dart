@@ -1,7 +1,14 @@
 import 'package:chatty/Model/chat_detail_model.dart';
+import 'package:chatty/View_Models/Blocs/Chat_Detailed_Page_Blocs/Fetch_All_Chats_Of_Given_User_Bloc/fetch_all_chat_of_given_user_bloc.dart';
+import 'package:chatty/View_Models/Blocs/Chat_Main_Page_Blocs/Update_User_Contact_Length_Bloc/update_user_contacts_length_bloc.dart';
 import 'package:chatty/View_Models/Firebase/Firebase_Cloud_Messaging_Service/firebase_cloud_messaging_service.dart';
+import 'package:chatty/View_Models/Local_Database/shared_preference_locaal_data_base.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FireBaseFireStoreDatBase {
   List<String> userContactNumberList = [];
@@ -53,6 +60,78 @@ class FireBaseFireStoreDatBase {
       developer.log("User data added");
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void> listenToAnyChangeInUserContactCollection(
+      {required BuildContext context}) async {
+    developer.log("Start listening to contact changes ....");
+    SharedPreferenceLocalDataBase sharedPreferenceLocalDataBase =
+        SharedPreferenceLocalDataBase();
+    String? currentUserPhoneNumber = await sharedPreferenceLocalDataBase
+        .fetchUserPhoneNumberFromLocalDatabase();
+
+    if (currentUserPhoneNumber != null) {
+      if (currentUserPhoneNumber.isNotEmpty) {
+        await firebaseFirestore
+            .collection(userMainCollection)
+            .doc(currentUserPhoneNumber)
+            .collection(userContactsSubCollection)
+            .snapshots()
+            .listen(
+          (event) {
+            // for (var i = 1; i <= event.docs.length; i++) {
+            //   if (i == event.docs.length) {
+            //     developer.log(
+            //         "Chnage in contacts .... ${event.docs.last.data().toString()}");
+            //   }
+            // }
+
+            context
+                .read<UpdateUserContactsLengthBloc>()
+                .add(UpdateUserContactListFromGivenFirebaseContactListEvent());
+
+            // for (var change in event.docs.last) {
+
+            // context.read<UpdateUserContactsLengthBloc>().add(
+            //     UpdateUserContactListFromGivenFirebaseContactListEvent());
+            // }
+          },
+        );
+      }
+    }
+  }
+
+  Future<void> listenToAnyChangeInChatWithCurrentChatPerson(
+      {required BuildContext context,
+      required String currentChatContactPhoneNumber}) async {
+    developer.log("Start listening to chat changes ....");
+
+    SharedPreferenceLocalDataBase sharedPreferenceLocalDataBase =
+        SharedPreferenceLocalDataBase();
+    String? currentUserPhoneNumber = await sharedPreferenceLocalDataBase
+        .fetchUserPhoneNumberFromLocalDatabase();
+
+    if (currentUserPhoneNumber != null) {
+      if (currentUserPhoneNumber.isNotEmpty) {
+        await firebaseFirestore
+            .collection(chatMainCollection)
+            .doc(currentUserPhoneNumber)
+            .collection(currentChatContactPhoneNumber)
+            .snapshots()
+            .listen(
+          (event) {
+            context.read<FetchAllChatOfGivenUserBloc>().add(
+                FetchAllChatsOfUserFromFirebaseFirestoreEvent(
+                    userPhoneNumber: currentUserPhoneNumber,
+                    chatPersonPhoneNumber: currentChatContactPhoneNumber));
+            for (var change in event.docs) {
+              developer.log(
+                  "Current chat changess .... ${change.data().toString()}");
+            }
+          },
+        );
+      }
     }
   }
 

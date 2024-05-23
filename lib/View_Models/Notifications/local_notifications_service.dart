@@ -1,5 +1,5 @@
-import 'package:chatty/Views/Screens/chat_main_page_design.dart';
-import 'package:chatty/Views/Widgets/Chat_Main_Page_Widgets/chat_main_page_local_data_list_tile.dart';
+import 'package:chatty/Views/Screens/Chat_Screens/chat_main_page_design.dart';
+import 'package:chatty/Views/Widgets/Chat_Widgets/Chat_Main_Page_Widgets/chat_main_page_local_data_list_tile.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

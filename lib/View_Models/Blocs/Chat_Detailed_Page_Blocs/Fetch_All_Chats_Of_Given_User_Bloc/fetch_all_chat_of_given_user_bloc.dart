@@ -12,7 +12,6 @@ class FetchAllChatOfGivenUserBloc
     extends Bloc<FetchAllChatOfGivenUserEvent, FetchAllChatOfGivenUserState> {
   FireBaseFireStoreDatBase fireBaseFireStoreDatBase =
       FireBaseFireStoreDatBase();
-  List<ChatDetailModel> allChatsOfUser = [];
   FetchAllChatOfGivenUserBloc() : super(FetchAllChatOfGivenUserInitialState()) {
     on<FetchAllChatsOfUserFromFirebaseFirestoreEvent>(
         _mapFetchAllChatsOfUserFromFirebaseFirestoreEventToStates);
@@ -23,6 +22,8 @@ class FetchAllChatOfGivenUserBloc
       Emitter<FetchAllChatOfGivenUserState> emit) async {
     emit(FetchAllChatOfGivenUserLoadingState());
     try {
+      List<ChatDetailModel> allChatsOfUser = [];
+
       allChatsOfUser =
           await fireBaseFireStoreDatBase.fetchAllChatsOfGivenContact(
               userPhoneNumber: event.userPhoneNumber,

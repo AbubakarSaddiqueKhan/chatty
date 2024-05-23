@@ -1,10 +1,12 @@
 import 'package:chatty/Model/chat_detail_model.dart';
 import 'package:chatty/View_Models/Blocs/Update_User_Profile_Blocs/Update_User_Profile_Image_Bloc/update_user_profile_image_bloc.dart';
+import 'package:chatty/View_Models/Custom_Codes/custom_permissions.dart';
+import 'package:chatty/View_Models/Custom_Codes/zego_cloud_video_call_custom_code.dart';
 import 'package:chatty/View_Models/Firebase/Firebase_Cloud_Messaging_Service/firebase_cloud_messaging_service.dart';
 import 'package:chatty/View_Models/Firebase/Firebase_Firestore_Database/firebase_fire_store.dart';
 import 'package:chatty/View_Models/Navigation/on_generate_route_navigation.dart';
 import 'package:chatty/View_Models/Notifications/local_notifications_service.dart';
-import 'package:chatty/Views/Screens/splash_screen.dart';
+import 'package:chatty/Views/Screens/Chat_Screens/splash_screen.dart';
 import 'package:chatty/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,6 +17,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   handleBackgroundFCMNotification();
+  requestPermission();
+  createEngine();
 
   runApp(const MyApp());
 
@@ -89,6 +93,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 /**
  * 
  * Platform  Firebase App Id
@@ -98,5 +103,4 @@ ios       1:399624615138:ios:4c02311c1a3041fde6dabb
 macos     1:399624615138:ios:4c02311c1a3041fde6dabb
 windows   1:399624615138:web:6a155522adeb4a9ce6dabb
 
-
- */
+*/

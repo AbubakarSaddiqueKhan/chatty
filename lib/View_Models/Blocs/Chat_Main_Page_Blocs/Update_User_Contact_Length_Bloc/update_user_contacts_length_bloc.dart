@@ -16,7 +16,6 @@ class UpdateUserContactsLengthBloc
   SharedPreferenceLocalDataBase sharedPreferenceLocalDataBase =
       SharedPreferenceLocalDataBase();
 
-  List<String> userAllContactsPhoneNumber = [];
   UpdateUserContactsLengthBloc()
       : super(UpdateUserContactsLengthInitialState()) {
     on<UpdateUserContactListFromGivenFirebaseContactListEvent>(
@@ -31,6 +30,8 @@ class UpdateUserContactsLengthBloc
     try {
       String? userMobileNumber = await sharedPreferenceLocalDataBase
           .fetchUserPhoneNumberFromLocalDatabase();
+
+      List<String> userAllContactsPhoneNumber = [];
 
       userAllContactsPhoneNumber =
           await fireBaseFireStoreDatBase.fetchAllChatContactsOfGivenNumber(

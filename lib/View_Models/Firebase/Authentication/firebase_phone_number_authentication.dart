@@ -1,6 +1,6 @@
 import 'package:chatty/View_Models/Blocs/Phone_Number_Page_Blocs/Add_User_Phone_Number_To_LOcal_Database/add_user_phone_number_to_local_database_bloc.dart';
-import 'package:chatty/Views/Screens/otp_verifying_screen.dart';
-import 'package:chatty/Views/Screens/update_user_profile_screen.dart';
+import 'package:chatty/Views/Screens/Chat_Screens/otp_verifying_screen.dart';
+import 'package:chatty/Views/Screens/Chat_Screens/update_user_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer' as developer;
 
