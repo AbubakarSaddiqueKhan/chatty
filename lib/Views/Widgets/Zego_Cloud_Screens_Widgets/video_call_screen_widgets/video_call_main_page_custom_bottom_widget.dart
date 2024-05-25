@@ -7,7 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class VideoCallMainPageCustomBottomWidget extends StatefulWidget {
-  const VideoCallMainPageCustomBottomWidget({super.key});
+  const VideoCallMainPageCustomBottomWidget({super.key, required this.callId});
+  final String callId;
 
   @override
   State<VideoCallMainPageCustomBottomWidget> createState() =>
@@ -42,7 +43,9 @@ class _VideoCallMainPageCustomBottomWidgetState
                   isVideoCameraEnabled: isVideoCameraEnabled),
               SwitchFrontRearCameraCustomWidget(
                   isFrontCameraEnabled: isFrontCameraEnabled),
-              const EndVideCallCustomButton(),
+              EndVideCallCustomButton(
+                callId: widget.callId,
+              ),
               EnableOrDisableLocalUserMicCustomWidget(
                   isMicroPhoneEnabled: isMicroPhoneEnabled),
               EnableOrDisableLocalUserSpeakersCustomWidget(

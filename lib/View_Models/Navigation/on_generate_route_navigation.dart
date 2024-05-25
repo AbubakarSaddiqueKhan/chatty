@@ -14,6 +14,7 @@ import 'package:chatty/View_Models/Blocs/Zego_Cloud_Blocs/Video_Call_Blocs/Creat
 import 'package:chatty/View_Models/Blocs/Zego_Cloud_Blocs/Video_Call_Blocs/EnableOrDisableLocalUserMicBloc/enable_or_disable_local_user_mic_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Zego_Cloud_Blocs/Video_Call_Blocs/EnableOrDisableLocalUserSpeakerBloc/enable_or_disable_local_user_speaker_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Zego_Cloud_Blocs/Video_Call_Blocs/Enable_Or_Disable_Video_Camera_Bloc/enable_or_disable_video_camera_bloc_bloc.dart';
+import 'package:chatty/View_Models/Blocs/Zego_Cloud_Blocs/Video_Call_Blocs/SendVideoCallInvitationBloc/send_video_call_invitation_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Zego_Cloud_Blocs/Video_Call_Blocs/Switch_Local_User_Video_Camera_Bloc/switch_local_user_video_camera_bloc.dart';
 import 'package:chatty/Views/Screens/Chat_Screens/chat_detailed_page_design.dart';
 import 'package:chatty/Views/Screens/Chat_Screens/chat_main_page_design.dart';
@@ -110,6 +111,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
             BlocProvider(
               create: (context) => FetchAllChatOfGivenUserBloc(),
             ),
+            BlocProvider(
+              create: (context) => SendVideoCallInvitationBloc(),
+            )
           ],
           child: const ChatDetailedScreen(),
         ),

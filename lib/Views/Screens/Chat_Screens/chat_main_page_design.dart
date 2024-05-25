@@ -1,5 +1,6 @@
 import 'package:chatty/View_Models/Blocs/Chat_Main_Page_Blocs/Display_User_Chat_Contacts_Data_Bloc/display_user_chat_contacts_data_bloc.dart';
 import 'package:chatty/View_Models/Blocs/Chat_Main_Page_Blocs/Update_User_Contact_Length_Bloc/update_user_contacts_length_bloc.dart';
+import 'package:chatty/View_Models/Custom_Codes/zego_cloud_send_call_invitation_custom_code.dart';
 import 'package:chatty/View_Models/Firebase/Firebase_Firestore_Database/firebase_fire_store.dart';
 import 'package:chatty/View_Models/Local_Database/shared_preference_locaal_data_base.dart';
 import 'package:chatty/Views/Screens/Chat_Screens/chat_detailed_page_design.dart';
@@ -47,21 +48,36 @@ class _ChatMainPageDesignState extends State<ChatMainPageDesign> {
     userMobileNumber = await sharedPreferenceLocalDataBase
         .fetchUserPhoneNumberFromLocalDatabase();
 
-    bool isUserContactAdded = await fireBaseFireStoreDatBase
-        .checkUserContactsExistence(userMobileNumber: userMobileNumber!);
+    Map<String, dynamic>? currentUserData = await fireBaseFireStoreDatBase
+        .fetchDataOfGivenPhoneNumber(phoneNumber: userMobileNumber!);
 
-    print("is................... $isUserContactAdded");
+    String curentUserName =
+        currentUserData?[FireBaseFireStoreDatBase.keyUserFirstName];
 
-    if (isUserContactAdded) {
-      print("start findingg contacts ....");
-      if (mounted) {
-        // context
-        //     .read<UpdateUserContactsLengthBloc>()
-        //     .add(UpdateUserContactListFromGivenFirebaseContactListEvent());
+    // print("is................... $isUserContactAdded");
 
-        developer.log("Need to be update length ...");
-      }
-    }
+    await listenToCallInvitationReceived(context: context);
+
+    // connectUser(userMobileNumber!, "Developer");
+    await connectUser(userMobileNumber!, curentUserName);
+
+    // await listenToTheCalleeResponse(context: context,callReceiverPhoneNumber: "03038738355" ,callSenderName:  ,callSenderPhoneNumber: userMobileNumber!);
+
+    await listenToCallInvitationReceived(context: context);
+
+    await listenToTheCalleeResponse(
+      context: context,
+    );
+    // if (isUserContactAdded) {
+    //   print("start findingg contacts ....");
+    //   if (mounted) {
+    //     // context
+    //     //     .read<UpdateUserContactsLengthBloc>()
+    //     //     .add(UpdateUserContactListFromGivenFirebaseContactListEvent());
+
+    //     developer.log("Need to be update length ...");
+    //   }
+    // }
   }
 
   @override

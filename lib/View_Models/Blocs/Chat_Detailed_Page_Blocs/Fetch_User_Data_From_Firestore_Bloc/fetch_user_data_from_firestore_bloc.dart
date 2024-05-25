@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:chatty/Model/user_contact_detail_data_model.dart';
 import 'package:chatty/View_Models/Firebase/Firebase_Firestore_Database/firebase_fire_store.dart';
 import 'package:chatty/View_Models/Local_Database/shared_preference_locaal_data_base.dart';
-import 'package:chatty/Views/Screens/Chat_Screens/find_user_screen.dart';
 import 'package:meta/meta.dart';
 import 'dart:developer' as developer;
 
